@@ -24,7 +24,7 @@ ansible-galaxy install -r requirements.yml -p roles/
 ## Kill rogue web service  
 
 ```
-ansible-playbook -i production -u ubuntu kill_web.yml
+ansible-playbook -i production -u ubuntu --ask-vault-pass kill_web.yml
 ```
 
 ## Build web server  
