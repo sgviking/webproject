@@ -26,6 +26,7 @@ lvm_volume: "storage_volume"
 
 # wpscan
 wpscan_image: "wpscanteam/wpscan"
+wpscan_scan_url: "{{ wpscan_scan_url_vault }}"
 
 # hellodate
 hellodate_local_path: "src/hellodate/hellodate"

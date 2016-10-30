@@ -1,0 +1,13 @@
+---
+- name: Use wpscan docker image to run scan
+  hosts: all
+  become: true
+  gather_facts: false
+  tasks:
+  - name: Run wpscan
+    shell: "docker run --rm wpscanteam/wpscan -u {{ wpscan_scan_url }} > /home/ubuntu/wpscan.log"
+    ignore_errors: yes
+  - name: Get wpscan.log
+    fetch:
+      src: /home/ubuntu/wpscan.log
+      dest: downloads/
