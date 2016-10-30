@@ -20,3 +20,15 @@ every 5 minutes. Make sure you capture both regular output and error output.
 ```
 ansible-galaxy install -r requirements.yml -p roles/  
 ```
+
+## Kill rogue web service  
+
+```
+ansible-playbook -i production -u ubuntu kill_web.yml
+```
+
+## Build web server  
+
+```
+ansible-playbook -i production -u ubuntu --ask-vault-pass site.yml
+```
