@@ -32,3 +32,9 @@ ansible-playbook -i production -u ubuntu --ask-vault-pass kill_web.yml
 ```
 ansible-playbook -i production -u ubuntu --ask-vault-pass site.yml
 ```
+
+## Run wpscan from docker image   
+
+```
+ansible-playbook -i production -u ubuntu --ask-vault-pass wpscan.yml
+```
