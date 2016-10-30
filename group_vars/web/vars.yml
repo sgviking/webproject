@@ -1,0 +1,32 @@
+---
+# NGINX
+server_cert: "{{ server_cert_vault }}"
+server_cert_path: "/etc/ssl/certs/words.crt"
+server_key: "{{ server_key_vault }}"
+server_key_path: "/etc/ssl/private/words.key"
+
+# Docker
+docker_opts: "--storage-driver=aufs"
+install_kernel_extras: true
+
+# Elasticsearch
+elasticsearch_script_inline: false
+
+# PostgreSQL
+postgres_ppa: "deb http://apt.postgresql.org/pub/repos/apt/ xenial-pgdg main"
+postgres_ppa_key: "https://www.postgresql.org/media/keys/ACCC4CF8.asc"
+postgres_database: "scorecard"
+postgres_user: "scorecard"
+postgres_password: "{{ postgres_password_vault }}"
+
+# LVM
+lvm_group: "storage_group"
+lvm_disk: "/dev/xvdb"
+lvm_volume: "storage_volume"
+
+# wpscan
+wpscan_image: "wpscanteam/wpscan"
+
+# hellodate
+hellodate_local_path: "src/hellodate/hellodate"
+hellodate_remote_path: "/usr/local/bin/hellodate"
