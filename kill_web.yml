@@ -1,0 +1,12 @@
+---
+- name: Kill rogue web service
+  hosts: all
+  become: true
+  gather_facts: false
+  tasks:
+  - name: Stop web service
+    shell: stop web
+    ignore_errors: yes
+  - name: Move web.conf to /home/ubuntu/
+    shell: mv /etc/init/web.conf /home/ubuntu/web.conf
+    ignore_errors: yes
