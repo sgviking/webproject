@@ -1,8 +1,8 @@
 ---
 # NGINX
-server_cert: "{{ server_cert_vault }}"
+server_cert: "{{ vault_server_cert }}"
 server_cert_path: "/etc/ssl/certs/words.crt"
-server_key: "{{ server_key_vault }}"
+server_key: "{{ vault_server_key }}"
 server_key_path: "/etc/ssl/private/words.key"
 
 # Docker
@@ -17,7 +17,7 @@ postgres_ppa: "deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main"
 postgres_ppa_key: "https://www.postgresql.org/media/keys/ACCC4CF8.asc"
 postgres_database: "scorecard"
 postgres_user: "scorecard"
-postgres_password: "{{ postgres_password_vault }}"
+postgres_password: "{{ vault_postgres_password }}"
 
 # LVM
 lvm_group: "storage_group"
@@ -26,7 +26,7 @@ lvm_volume: "storage_volume"
 
 # wpscan
 wpscan_image: "wpscanteam/wpscan"
-wpscan_scan_url: "{{ wpscan_scan_url_vault }}"
+wpscan_scan_url: "{{ vault_wpscan_scan_url }}"
 
 # hellodate
 hellodate_local_path: "src/hellodate/hellodate"
