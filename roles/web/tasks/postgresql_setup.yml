@@ -1,0 +1,20 @@
+- name: Add PostgreSQL table
+  postgresql_db:
+    name: "{{ postgres_database }}"
+  tags: [ "postgresql" ]
+
+- name: Add PostgreSQL user
+  postgresql_user:
+    db: "{{ postgres_database }}"
+    name: "{{ postgres_user }}"
+    password: "{{ postgres_password }}"
+  tags: [ "postgresql" ]
+
+- name: Remove privileges for PUBLIC role to created database
+  postgresql_privs:
+    db: "{{ postgres_database }}"
+    role: PUBLIC
+    type: database
+    priv: ALL
+    state: absent
+  tags: [ "postgresql" ]

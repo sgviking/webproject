@@ -1,0 +1,31 @@
+- name: Install iptables-persistent script
+  apt:
+    name: iptables-persistent
+    state: present
+  notify: Create and save iptables
+  tags: [ "iptables" ]
+
+- name: Enable iptables-persistent service
+  service:
+    name: iptables-persistent
+    state: started
+    enabled: yes
+  notify: Create and save iptables
+  tags: [ "iptables" ]
+
+- name: Copy iptables script to server
+  copy:
+    src: files/iptables.sh
+    dest: /tmp/iptables.sh
+    owner: root
+    group: root
+    mode: 0700
+  notify: Create and save iptables
+  tags: [ "iptables" ]
+
+- name: Create /etc/iptables directory
+  file:
+    path: /etc/iptables
+    state: directory
+  notify: Create and save iptables
+  tags: [ "iptables" ]

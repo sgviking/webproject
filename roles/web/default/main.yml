@@ -1,0 +1,3 @@
+---
+server_cert: "certificate goes here"
+server_key: "key goes here"

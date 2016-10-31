@@ -1,0 +1,16 @@
+- name: Copy hellodate to server
+  copy:
+    src: "{{ hellodate_local_path }}"
+    dest: "{{ hellodate_remote_path }}"
+    owner: root
+    group: root
+    mode: 755
+  tags: [ "hellodate" ]
+
+- name: Setup cron task to run hellodate every 5 minutes
+  cron:
+    name: Hello Date
+    minute: "*/5"
+    job: "{{ hellodate_remote_path }} >> /tmp/cron.log 2>&1"
+    user: nobody
+  tags: [ "hellodate" ]

@@ -1,0 +1,12 @@
+- name: Restart NGINX
+  service:
+    name: nginx
+    state: restarted
+    enabled: yes
+
+- name: Create and save iptables
+  shell: /tmp/iptables.sh
+  notify: Save iptables
+
+- name: Save iptables
+  shell: iptables-save > /etc/iptables/rules.v4

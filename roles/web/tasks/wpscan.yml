@@ -1,0 +1,4 @@
+- name: Install wpscan docker image
+  docker_image:
+    name: "{{ wpscan_image }}"
+  tags: [ "wpscan" ]

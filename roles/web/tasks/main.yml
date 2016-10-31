@@ -1,0 +1,21 @@
+---
+- name: Debug - ansible_distribution
+  debug: var=ansible_distribution verbosity=2
+
+- name: Fail if not on Ubuntu
+  assert: { that: "ansible_distribution == 'Ubuntu'" }
+
+- include: postgresql_install.yml
+
+- include: postgresql_setup.yml
+  become_user: postgres
+
+- include: lvm.yml
+
+- include: hellodate.yml
+
+- include: nginx.yml
+
+- include: wpscan.yml
+
+- include: iptables.yml

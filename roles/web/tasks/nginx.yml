@@ -1,0 +1,38 @@
+- name: Install server certificate
+  copy:
+    content: "{{ server_cert }}"
+    dest: "{{ server_cert_path }}"
+    owner: root
+    group: root
+    mode: 0600
+  notify: Restart NGINX
+  tags: [ "nginx" ]
+
+- name: Debug - server_cert
+  debug:
+    var: server_cert
+    verbosity: 4
+
+- name: Install server key
+  copy:
+    content: "{{ server_key }}"
+    dest: "{{ server_key_path }}"
+    owner: root
+    group: root
+    mode: 0600
+  notify: Restart NGINX
+  tags: [ "nginx" ]
+
+- name: Debug - server_key
+  debug:
+    var: server_key
+    verbosity: 4
+
+- name: Add NGINX default site
+  template:
+    src: default.j2
+    dest: /etc/nginx/sites-available/default
+    owner: root
+    mode: 0644
+  notify: Restart NGINX
+  tags: [ "nginx" ]

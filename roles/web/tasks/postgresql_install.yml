@@ -1,0 +1,32 @@
+- name: Add PostgreSQL PPA
+  apt_repository:
+    repo: "{{ postgres_ppa }}"
+    state: present
+  tags: [ "postgresql" ]
+
+- name: Add PostgreSQL PPA key
+  apt_key:
+    url: "{{ postgres_ppa_key }}"
+    state: present
+  tags: [ "postgresql" ]
+
+- name: Update apt cache
+  apt:
+    update_cache: yes
+  tags: [ "postgresql" ]
+
+- name: Install PostgreSQL and dependency
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - python-psycopg2
+    - postgresql-9.6
+  tags: [ "postgresql" ]
+
+- name: Start postgresql service
+  service:
+    name: postgresql
+    state: started
+    enabled: yes
+  tags: [ "postgresql" ]

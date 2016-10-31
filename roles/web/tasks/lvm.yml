@@ -1,0 +1,40 @@
+- name: Install lvm2 package
+  apt:
+    name: lvm2
+    state: present
+  tags: [ "lvm" ]
+
+- name: Setup lvm volume group
+  lvg:
+    vg: "{{ lvm_group }}"
+    pvs: "{{ lvm_disk }}"
+    state: present
+  tags: [ "lvm" ]
+
+- name: Setup lvm volume
+  lvol:
+    vg: "{{ lvm_group }}"
+    lv: "{{ lvm_volume }}"
+    size: 100%FREE
+    shrink: False
+  tags: [ "lvm" ]
+
+- name: Format filesystem on lvm volume
+  filesystem:
+    fstype: ext4
+    dev: "/dev/mapper/{{ lvm_group }}-{{ lvm_volume }}"
+  tags: [ "lvm" ]
+
+- name: Create /mnt/storage to mount the volume
+  file:
+    path: /mnt/storage
+    state: directory
+  tags: [ "lvm" ]
+
+- name: Mount volume and put in fstab
+  mount:
+    name: /mnt/storage
+    src: "/dev/mapper/{{ lvm_group }}-{{lvm_volume }}"
+    fstype: ext4
+    state: mounted
+  tags: [ "lvm" ]

@@ -1,0 +1,7 @@
+---
+- name: Apply web roles to hosts in web group
+  hosts: web 
+  become: true
+  gather_facts: true
+  roles:
+    - web
