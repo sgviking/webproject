@@ -1,0 +1,5 @@
+[web]
+35.160.207.54
+
+[web:vars]
+ansible_python_interpreter=/usr/bin/python2.7
