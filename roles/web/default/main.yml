@@ -1,3 +1,26 @@
 ---
+# NGINX
 server_cert: "certificate goes here"
 server_key: "key goes here"
+server_cert_path: "/etc/ssl/certs/words.crt"
+server_key_path: "/etc/ssl/private/words.key"
+
+# PostgreSQL
+postgres_ppa: "deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main"
+postgres_ppa_key: "https://www.postgresql.org/media/keys/ACCC4CF8.asc"
+postgres_database: "database"
+postgres_user: "user"
+postgres_password: "password"
+
+# LVM
+lvm_group: "storage_group"
+lvm_disk: "/dev/xvdb"
+lvm_volume: "storage_volume"
+
+# wpscan
+wpscan_image: "wpscanteam/wpscan"
+wpscan_scan_url: "http://localhost"
+
+# hellodate
+hellodate_local_path: "files/hellodate"
+hellodate_remote_path: "/usr/local/bin/hellodate"
