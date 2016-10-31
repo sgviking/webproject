@@ -1,17 +1,4 @@
 ---
-- name: Install Python 2.7 for Ubuntu 16.04
-  hosts: all
-  become: true
-  gather_facts: false
-  tasks:
-  # https://groups.google.com/forum/#!topic/ansible-project/DUKzTho3OCI
-  - name: Update packages
-    raw: apt-get update -qq
-    tags: [ "prereq" ]
-  - name: Install Python 2.7
-    raw: apt-get install -qq python2.7
-    tags: [ "prereq" ]
-
 - name: Install latest PostgreSQL
   hosts: all
   become: true
@@ -39,6 +26,12 @@
       - python-psycopg2
       - postgresql-9.6
     tags: [ "postgresql" ]
+  - name: Start postgresql service
+    service:
+      name: postgresql
+      state: started
+      enabled: yes
+    tags: [ "postgresql" ]
 
 - name: Configure PostgreSQL with database and user
   hosts: all
@@ -65,6 +58,7 @@
       state: absent
     tags: [ "postgresql" ]
 
+
 - name: Add roles to server
   hosts: all
   become: true
@@ -72,49 +66,9 @@
   tasks:
   roles:
     - { role: "angstwad.docker_ubuntu", tags: [ "docker" ] }
-    - { role: "geerlingguy.java", tags: [ "elasticsearch " ] }
-    - { role: "geerlingguy.elasticsearch", tags: [ "elasticsearch "] }
+    - { role: "geerlingguy.java", tags: [ "elasticsearch" ] }
+    - { role: "geerlingguy.elasticsearch", tags: [ "elasticsearch"] }
     - { role: "geerlingguy.nginx", tags: [ "nginx" ] }
-
-- name: Configure iptables
-  hosts: all
-  become: true
-  gather_facts: false
-  tasks:
-  - name: Install iptables-persistent script
-    apt:
-      name: iptables-persistent
-      state: present
-    notify: Create and save iptables
-    tags: [ "iptables" ]
-  - name: Enable netfilter-persistent service
-    service:
-      name: netfilter-persistent
-      state: started
-      enabled: yes
-    notify: Create and save iptables
-    tags: [ "iptables" ]
-  - name: Copy iptables script to server
-    copy:
-      src: files/iptables.sh
-      dest: /tmp/iptables.sh
-      owner: root
-      group: root
-      mode: 0700
-    notify: Create and save iptables
-    tags: [ "iptables" ]
-  - name: Create /etc/iptables directory
-    file:
-      path: /etc/iptables
-      state: directory
-    notify: Create and save iptables
-    tags: [ "iptables" ]
-  handlers:
-    - name: Create and save iptables
-      shell: /tmp/iptables.sh
-      notify: Save iptables
-    - name: Save iptables
-      shell: iptables-save > /etc/iptables/rules.v4
 
 - name: Configure NGINX
   hosts: all
@@ -233,3 +187,43 @@
       fstype: ext4
       state: mounted
     tags: [ "lvm" ]
+
+- name: Configure iptables
+  hosts: all
+  become: true
+  gather_facts: false
+  tasks:
+  - name: Install iptables-persistent script
+    apt:
+      name: iptables-persistent
+      state: present
+    notify: Create and save iptables
+    tags: [ "iptables" ]
+  - name: Enable iptables-persistent service
+    service:
+      name: iptables-persistent
+      state: started
+      enabled: yes
+    notify: Create and save iptables
+    tags: [ "iptables" ]
+  - name: Copy iptables script to server
+    copy:
+      src: files/iptables.sh
+      dest: /tmp/iptables.sh
+      owner: root
+      group: root
+      mode: 0700
+    notify: Create and save iptables
+    tags: [ "iptables" ]
+  - name: Create /etc/iptables directory
+    file:
+      path: /etc/iptables
+      state: directory
+    notify: Create and save iptables
+    tags: [ "iptables" ]
+  handlers:
+    - name: Create and save iptables
+      shell: /tmp/iptables.sh
+      notify: Save iptables
+    - name: Save iptables
+      shell: iptables-save > /etc/iptables/rules.v4

@@ -13,7 +13,7 @@ install_kernel_extras: true
 elasticsearch_script_inline: false
 
 # PostgreSQL
-postgres_ppa: "deb http://apt.postgresql.org/pub/repos/apt/ xenial-pgdg main"
+postgres_ppa: "deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main"
 postgres_ppa_key: "https://www.postgresql.org/media/keys/ACCC4CF8.asc"
 postgres_database: "scorecard"
 postgres_user: "scorecard"
