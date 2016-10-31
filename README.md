@@ -24,17 +24,17 @@ ansible-galaxy install -r requirements.yml -p roles/
 ## Kill rogue web service  
 
 ```
-ansible-playbook -i production -u ubuntu --ask-vault-pass kill_web.yml
+ansible-playbook -i production -u ubuntu --ask-vault-pass kill_rogue_web.yml  
 ```
 
 ## Build web server  
 
 ```
-ansible-playbook -i production -u ubuntu --ask-vault-pass site.yml
+ansible-playbook -i production -u ubuntu --ask-vault-pass site.yml  
 ```
 
 ## Run wpscan from docker image   
 
 ```
-ansible-playbook -i production -u ubuntu --ask-vault-pass wpscan.yml
+ansible-playbook -i production -u ubuntu --ask-vault-pass wpscan.yml  
 ```
